@@ -42,6 +42,9 @@ wire   [XLEN-1:0]  SignImm_wire;
 // Shift left module wire's
 wire   [XLEN-1:0]  shifted_data_wire;
 
+// PCBranch module wire's
+wire   [XLEN-1:0]  PCBranch_wire;
+
 // Control unit wire's
 wire               IRwrite_wire;
 wire               MemWrite_wire;
@@ -49,7 +52,7 @@ wire               RegDst_wire;
 
 wire   [XLEN-1:0]  Instr_wire;           // Instruction wire bus from instr reg
 
-wire   [5:0]       WriteReg_wire;
+wire   [4:0]       WriteReg_wire;
 
 //=== Assignments ===
 assign instr_iaddr_o = pc_wire;        // address bus for instruction memory
