@@ -32,13 +32,12 @@ logic   [XLEN-1:0]  pc_wire;
 logic               PCSrc_wire;
 
 // ALU wire's
-
+logic   [XLEN-1:0]  SrcB_wire;
 
 // Adder pc plus four wire's
 logic   [XLEN-1:0]  PCPlus4_wire;
 
 // Extend module wire's
-logic   [1:0]       ImmSrc_wire;
 logic   [XLEN-1:0]  ImmExt_wire;
 
 // Adder PCTarget module wire's
@@ -49,11 +48,14 @@ logic   [XLEN-1:0]  rd1_wire;
 logic   [XLEN-1:0]  rd2_wire;
 
 // Control unit wire's
+logic   [1:0]       ImmSrc_wire;
+logic               RegWrite_wire;
+logic               ALUSrc_wire;
 
 
 //=== Assignments ===
-assign instr_iaddr_o = pc_wire;        // address bus for instruction memory
- 
+assign instr_iaddr_o = pc_wire;      // address bus for instruction memory
+assign mem_data_o    = rd2_wire;     // memory data bus 
 
 //=== Logic section ===
 //
@@ -87,20 +89,26 @@ adder pc_target (
 );
 
 extend extnd(
-   instr    ( instr_data_i[31:7] ),
-   immsrc   ( ImmSrc_wire ),
-   immext   ( ImmExt_wire )
+   .instr    ( instr_data_i[31:7] ),
+   .immsrc   ( ImmSrc_wire ),
+   .immext   ( ImmExt_wire )
 );
 
 reg_file register_file (
    .clk     ( clk_i ),
-   .we3     (  ),
-   .a1      (  ),
-   .a2      (  ),
-   .a3      (  ),
+   .we3     ( RegWrite_wire ),
+   .a1      ( instr_data_i[19:15] ),
+   .a2      ( instr_data_i[24:20] ),
+   .a3      ( instr_data_i[11:7] ),
    .wd3     (  ),
-   .rd1     (  ),
-   .rd2     (  )
+   .rd1     ( rd1_wire ),
+   .rd2     ( rd2_wire )
 );
 
+mux_2_1 alusrc (
+   .i0      ( rd2_wire ),
+   .i1      ( ImmExt_wire ),
+   .s       ( ALUSrc_wire ),
+   .f       ( SrcB_wire )
+);
 endmodule 
