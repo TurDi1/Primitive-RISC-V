@@ -22,6 +22,7 @@ assign rd2 = (a2 != 0) ? x[a2] : 0;
 
 //=== Logic section ===
 always_ff @(posedge clk)
-if (we3) x[a3] <= wd3;
+   if (we3) 
+      x[a3] <= wd3;
 
 endmodule 

@@ -13,7 +13,7 @@ module adder_n_subtractor
 input  logic  [XLEN-1:0]  a;     // first number input bus
 input  logic  [XLEN-1:0]  b;     // second number input bus
 input  logic              c;     // control input
-output logic  [XLEN-1:0]  s;     // sum of two numbers output bus
+output logic  [XLEN-1:0]  s;     // output bus with result of operation on two numbers
 
 always_comb
 begin
