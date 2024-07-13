@@ -13,7 +13,7 @@ module ALU
 
 input  logic  [XLEN-1:0]   a;
 input  logic  [XLEN-1:0]   b;
-input  logic  [1:0]        alucontrol;
+input  logic  [2:0]        alucontrol;
 output logic  [XLEN-1:0]   result;
 output logic               zero;
 
@@ -30,14 +30,19 @@ assign inv_b   = ~b;             // inverting of b number
 assign zero    = ~|result_wire;  // NOR all bit's of result
 assign result  = result_wire;
 
-//=== Logic section ===
-
 //=== Instatiations ===
 mux_2_1 b_mux (
    .i0       ( b ),
    .i1       ( inv_b ),
    .s        ( alucontrol[0] ),
    .f        ( b_mux_out )
+);
+
+adder_n_subtractor (
+   .a        ( a ),
+   .b        ( b_mux_out ),
+   .c        ( alucontrol[0] ),
+   .s        ( sum_out )
 );
 
 mux_4_1 out_mux (
@@ -48,5 +53,4 @@ mux_4_1 out_mux (
    .s        ( alucontrol ),
    .f        ( result_wire )
 );
-
 endmodule 
