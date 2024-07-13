@@ -7,17 +7,18 @@ Architecture of processor based on:
 ---
 
 Result's of simulation base modules:
-MUX 2:1
+MUX 2:1 
 ![mux_2_1_waveform](https://github.com/user-attachments/assets/bcbe9de8-0c03-4c12-8f4a-a2886447684e)
 
 ---
 
 ADDER
+
 ![adder_waveform](https://github.com/user-attachments/assets/9dbab0e0-8573-4644-9e3d-23a010301310)
 
 ---
 
-PC
+PC 
 ![pc_waveform](https://github.com/user-attachments/assets/34fa43cd-8d58-42e0-92d7-c28a83bac988)
 
 ---
