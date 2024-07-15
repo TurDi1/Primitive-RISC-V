@@ -1,4 +1,8 @@
 # Primitive-RISC-V
+
+---
+=== SIMULATION STATUS: The first two instructions are carried out. Then an error with mem_address ===
+
 Example of primitive single clock cycle RISC-V processor.
 
 Architecture of processor based on:
