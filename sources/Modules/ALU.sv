@@ -20,15 +20,20 @@ output logic               zero;
 //=== Wire's, reg's and etc... ===
 logic         [XLEN-1:0]   inv_b;
 logic         [XLEN-1:0]   b_mux_out;
+logic         [XLEN-1:0]   and_wire;
+logic         [XLEN-1:0]   or_wire;
 
 logic         [XLEN-1:0]   sum_out;
 
 logic         [XLEN-1:0]   result_wire;
 
 //=== Assignments ===
-assign inv_b   = ~b;             // inverting of b number
-assign zero    = ~|result_wire;  // NOR all bit's of result
-assign result  = result_wire;
+assign and_wire   = a & b;
+assign or_wire    = a | b;
+
+assign inv_b      = ~b;             // inverting of b number
+assign zero       = ~|result_wire;  // NOR all bit's of result
+assign result     = result_wire;
 
 //=== Instatiations ===
 mux_2_1 b_mux (
@@ -38,7 +43,7 @@ mux_2_1 b_mux (
    .f        ( b_mux_out )
 );
 
-adder_n_subtractor (
+adder_n_subtractor adder_sub (
    .a        ( a ),
    .b        ( b_mux_out ),
    .c        ( alucontrol[0] ),
@@ -46,11 +51,11 @@ adder_n_subtractor (
 );
 
 mux_4_1 out_mux (
-   .i0       ( sum_out ),
-   .i1       ( sum_out ),
-   .i2       ( a && b ),
-   .i3       ( a || b ),
-   .s        ( alucontrol ),
+   .a       ( sum_out ),
+   .b       ( sum_out ),
+   .c       ( and_wire ),
+   .d       ( or_wire ),
+   .s        ( alucontrol[1:0] ),
    .f        ( result_wire )
 );
 endmodule 

@@ -7,7 +7,7 @@ module RV32
 (
    clk_i,
    rst_i,
-   instr_iaddr_o,
+   instr_addr_o,
    instr_data_i,
    mem_we_o,
    mem_addr_o,
@@ -17,7 +17,7 @@ module RV32
 input  logic             clk_i;         // Clock input
 input  logic             rst_i;         // Reset input
 
-output logic [XLEN-1:0]  instr_iaddr_o; // 32-bit instruction address
+output logic [XLEN-1:0]  instr_addr_o; // 32-bit instruction address
 input  logic [XLEN-1:0]  instr_data_i;  // 32-bit instruction data
 
 output logic             mem_we_o;      // Memory write strobe
@@ -61,7 +61,7 @@ logic               ResultSrc_wire;
 logic   [XLEN-1:0]  Result_wire;
 
 //=== Assignments ===
-assign instr_iaddr_o = pc_wire;        // address bus for instruction memory
+assign instr_addr_o  = pc_wire;        // address bus for instruction memory
 assign mem_data_o    = rd2_wire;       // assign to data output memory bus
 assign mem_addr_o    = ALUResult_wire; // assign to address output memory bus 
 assign mem_we_o      = MemWrite_wire;  // assign to write enable output signal from ctrl unit
