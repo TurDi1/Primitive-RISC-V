@@ -1,9 +1,4 @@
-module ctrl_unit 
-#(
-   parameter XLEN = 32
-)
-
-(
+module ctrl_unit (
    op,
    funct3,
    funct7b5,
@@ -32,9 +27,11 @@ output logic         regwrite;
 //=== Wire's, reg's and etc... ===
 logic                Branch_wire;
 logic         [1:0]  aluop_wire;
+logic         [1:0]  resultsrc_wire;
 
 //=== Assignments ===
-assign pcsrc = Branch_wire & zero;
+assign pcsrc      = Branch_wire & zero;
+assign resultsrc  = resultsrc_wire[0];
 
 //=== Instatiations ===
 alu_decoder alu_dec (
@@ -45,5 +42,15 @@ alu_decoder alu_dec (
    .alucontrol  ( alucontrol )
 );
 
-
+main_decoder main_dec (
+   .op          ( op ),
+   .branch      ( Branch_wire ),
+   .resultsrc   ( resultsrc_wire ),
+   .memwrite    ( memwrite ),
+   .alusrc      ( alusrc ),
+   .immsrc      ( immsrc ),
+   .regwrite    ( regwrite ),
+   .aluop       ( aluop_wire ),
+   .jump        (  ) // not used in this version
+);
 endmodule 

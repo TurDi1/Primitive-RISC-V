@@ -51,17 +51,20 @@ logic   [XLEN-1:0]  rd2_wire;
 // Control unit wire's
 logic   [1:0]       ImmSrc_wire;
 logic               RegWrite_wire;
+logic               MemWrite_wire;
 logic               ALUSrc_wire;
 logic   [2:0]       ALUControl_wire;
 logic               Zero_wire;
+logic               ResultSrc_wire;
+
+// Others's wire's
+logic   [XLEN-1:0]  Result_wire;
 
 //=== Assignments ===
 assign instr_iaddr_o = pc_wire;        // address bus for instruction memory
 assign mem_data_o    = rd2_wire;       // assign to data output memory bus
 assign mem_addr_o    = ALUResult_wire; // assign to address output memory bus 
-
-//=== Logic section ===
-//
+assign mem_we_o      = MemWrite_wire;  // assign to write enable output signal from ctrl unit
 
 //=== Instatiations ===
 mux_2_1 pc_mux (
@@ -69,6 +72,20 @@ mux_2_1 pc_mux (
    .i1      ( PCTarget_wire ),
    .s       ( PCSrc_wire ),
    .f       ( pc_next_wire )
+);
+
+mux_2_1 alusrc (
+   .i0      ( rd2_wire ),
+   .i1      ( ImmExt_wire ),
+   .s       ( ALUSrc_wire ),
+   .f       ( SrcB_wire )
+);
+
+mux_2_1 resultsrc (
+   .i0       ( ALUResult_wire ),
+   .i1       ( mem_data_i ),
+   .s        ( ResultSrc_wire ),
+   .f        ( Result_wire )
 );
 
 pc program_cntr (
@@ -103,16 +120,9 @@ reg_file register_file (
    .a1      ( instr_data_i[19:15] ),
    .a2      ( instr_data_i[24:20] ),
    .a3      ( instr_data_i[11:7] ),
-   .wd3     (  ),
+   .wd3     ( Result_wire ),
    .rd1     ( rd1_wire ),
    .rd2     ( rd2_wire )
-);
-
-mux_2_1 alusrc (
-   .i0      ( rd2_wire ),
-   .i1      ( ImmExt_wire ),
-   .s       ( ALUSrc_wire ),
-   .f       ( SrcB_wire )
 );
 
 ALU alu (
@@ -123,7 +133,17 @@ ALU alu (
    .zero          ( Zero_wire )
 );
 
-mux_2_1 resultsrc (
-
+ctrl_unit control_unit (
+   .op          ( instr_data_i[6:0] ),
+   .funct3      ( instr_data_i[14:12] ),
+   .funct7b5    ( instr_data_i[30] ),
+   .zero        ( Zero_wire ),
+   .pcsrc       ( PCSrc_wire ),
+   .resultsrc   ( ResultSrc_wire ),
+   .memwrite    ( MemWrite_wire ),
+   .alucontrol  ( ALUControl_wire ),
+   .alusrc      ( ALUSrc_wire ),
+   .immsrc      ( ImmSrc_wire ),
+   .regwrite    ( RegWrite_wire )
 );
 endmodule 
