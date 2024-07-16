@@ -2,6 +2,7 @@ module mux_4_1
 #(
    parameter XLEN = 32
 )
+
 (
    a,
    b,
@@ -18,13 +19,15 @@ input  logic   [XLEN-1:0]  d;
 input  logic   [1:0]       s;
 output logic   [XLEN-1:0]  f;
 
-always_comb
-begin
-   case(s)
-      2'b00: f = a;
-      2'b01: f = b;
-      2'b10: f = c;
-      2'b11: f = d;
-   endcase
-end
+assign f = s[1] ? (s[0] ? d : c) : (s[0] ? b : a);
+
+//always @(*)
+//begin
+//   case(s)
+//      2'b00: f = a;
+//      2'b01: f = b;
+//      2'b10: f = c;
+//      2'b11: f = d;
+//   endcase
+//end
 endmodule 

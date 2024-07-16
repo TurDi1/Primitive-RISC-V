@@ -47,15 +47,15 @@ adder_n_subtractor adder_sub (
    .a        ( a ),
    .b        ( b_mux_out ),
    .c        ( alucontrol[0] ),
-   .s        ( sum_out )
+   .s        ( sum_out[XLEN-1:0] )
 );
 
 mux_4_1 out_mux (
-   .a       ( sum_out ),
-   .b       ( sum_out ),
+   .a       ( sum_out[XLEN-1:0] ),
+   .b       ( sum_out[XLEN-1:0] ),
    .c       ( and_wire ),
    .d       ( or_wire ),
    .s        ( alucontrol[1:0] ),
-   .f        ( result_wire )
+   .f        ( result_wire[XLEN-1:0] )
 );
 endmodule 
