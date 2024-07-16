@@ -1,7 +1,11 @@
 # Primitive-RISC-V
 
 ---
-=== SIMULATION STATUS: The first two instructions are carried out. Then an error with mem_address ===
+=== SIMULATION STATUS 16.07: The first two instructions are carried out. Then an error with mem_address ===
+  
+  The problem occurs between the summator/subtractor in the ALU and the MUX4:1.  Summator/subtractor result correct, but value that arrived on mux a and b inputs are incorrect. 
+
+---
 
 Example of primitive single clock cycle RISC-V processor.
 
