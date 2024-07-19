@@ -1,9 +1,8 @@
 # Primitive-RISC-V
 
 ---
-=== SIMULATION STATUS 16.07: The first two instructions are carried out. Then an error with mem_address ===
-  
-  The problem occurs between the summator/subtractor in the ALU and the MUX4:1.  Summator/subtractor result correct, but value that arrived on mux a and b inputs are incorrect. 
+=== SIMULATION STATUS 18.07: The first two instructions are carried out. Then an error with mem_address. ===
+   Adder/subtractor  was rewrited. Corrected data from adder/subtractor corectly arrive to mux4:1, but correct value from mux output arrive to output ALU incorrect.
 
 ---
 
