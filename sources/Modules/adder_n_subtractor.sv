@@ -19,7 +19,9 @@ always_comb
 begin
    case(c)
       1'b0: s = a + b;
-      1'b1: s = a - b;
+      1'b1: s = b + ~a + 1;
+//      1'b1: s = a - b;
+      default: s = 32'hxxxxxxxx; 
    endcase
 end
 endmodule 
