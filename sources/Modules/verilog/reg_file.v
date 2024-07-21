@@ -21,7 +21,7 @@ assign rd1 = (a1 != 0) ? x[a1] : 0;
 assign rd2 = (a2 != 0) ? x[a2] : 0;
 
 //=== Logic section ===
-always_ff @(posedge clk)
+always @(posedge clk)
    if (we3) 
       x[a3] <= wd3;
 
