@@ -1,7 +1,7 @@
 # Primitive-RISC-V
 
 ---
-=== SIMULATION STATUS 22.07: An attempt to rewrite the testbench to suit myself. Writing a testbench from scratch, using machine codes as a basis. Result - success. It remains to upload the results. ===
+=== SIMULATION STATUS 22.07: An attempt to rewrite the testbench to suit myself. Writing a testbench from scratch, using machine codes as a basis. Result - success. ===
 
 ---
 
