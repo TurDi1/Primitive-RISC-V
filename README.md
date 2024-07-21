@@ -1,6 +1,10 @@
 # Primitive-RISC-V
 
 ---
+=== SIMULATION STATUS 22.07: An attempt to rewrite the testbench to suit myself. Writing a testbench from scratch, using machine codes as a basis. Result - success. It remains to upload the results. ===
+
+---
+
 === SIMULATION STATUS 18.07: The first two instructions are carried out. Then an error with mem_address. ===
    Adder/subtractor  was rewrited. Corrected data from adder/subtractor corectly arrive to mux4:1, but correct value from mux output arrive to output ALU incorrect.
 
