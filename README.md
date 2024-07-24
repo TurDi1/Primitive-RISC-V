@@ -1,6 +1,19 @@
 # Primitive-RISC-V
 
 ---
+=== SIMULATION STATUS 24.07: rewrite memory. Described dual port ram. Result of sim - success. ===
+
+Data in dual port ram on init:
+
+![dualport_init_modelsim](https://github.com/user-attachments/assets/2573814a-8ac2-4e58-9718-9707425768c1)
+
+---
+
+Data in ram after run all instructions:
+
+![dualport_after_instructions_modelsim](https://github.com/user-attachments/assets/c9b5ecf0-b02f-43bf-8b92-ca261fc35871)
+
+---
 === SIMULATION STATUS 22.07: An attempt to rewrite the testbench to suit myself. Writing a testbench from scratch, using machine codes as a basis. Result - success. ===
 
 ---
