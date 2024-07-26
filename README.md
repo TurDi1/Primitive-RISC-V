@@ -1,6 +1,10 @@
 # Primitive-RISC-V
 
 ---
+=== SIMULATION STATUS 27.07: rewrite tb. Described testbench that now semi automated. Result of sim - success. ===
+![image](https://github.com/user-attachments/assets/4a7dc289-9b42-4ee3-9122-78cd2b405734)
+
+---
 === SIMULATION STATUS 24.07: rewrite memory. Described dual port ram. Result of sim - success. ===
 
 Data in dual port ram on init:
