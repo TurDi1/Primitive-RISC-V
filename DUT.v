@@ -1,10 +1,6 @@
-module DUT (
-   rst,
-   clk
-);
+`timescale 1 ns/ 1 ns
 
-input    rst;
-input    clk;
+module DUT ();
 
 wire     [31:0]   instr_addr_wire;
 wire     [31:0]   instr_data_wire;
@@ -14,6 +10,33 @@ wire              we_wire;
 wire     [31:0]   mem_addr_o_wire;
 wire     [31:0]   mem_data_i_wire;
 wire     [31:0]   mem_data_o_wire;
+
+reg      clk;
+reg      rst;
+
+always #5
+   clk <= ~clk;
+
+initial begin
+$display("=============================== Testbench started... =================================");
+   clk <= 0;
+   rst <= 1;
+#20
+   rst <= 0;
+end
+
+always @(DUT.dual_port_ram.ram[16])
+begin
+   $display($time," RAM[16] (0x40 address) value = '%h", DUT.dual_port_ram.ram[16]);
+   if (DUT.dual_port_ram.ram[16] == 32'h00000031)
+   begin
+      $display("======================================================================================");
+      $display("Simulation complete. Value in RAM with address 0x40 after last instruction is correct.");
+      $display("======================================================================================");
+      $display("======================================================================================");
+      $stop;
+   end
+end
 
 RV32 cpu (
    .clk_i            ( clk ),
