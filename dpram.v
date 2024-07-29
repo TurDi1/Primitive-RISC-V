@@ -17,7 +17,7 @@ module dpram
 reg [31:0] ram[31:0];
 
 initial begin
-   $readmemh("tb_mach_codes.hex",ram);
+   $readmemh("/home/turdi/Quartus_projects/sobes_project/sources/Modules/verilog/tb_mach_codes.hex",ram);
 end   
 
    // Port A (INSTRUCTION MEMORY) 
