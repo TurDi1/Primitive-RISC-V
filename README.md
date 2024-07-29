@@ -1,6 +1,17 @@
 # Primitive-RISC-V
 
 ---
+=== SIMULATION STATUS 29.07: Fixed the testbench. ===
+
+Check correct value
+
+![Check correct value](https://github.com/user-attachments/assets/7bee26b8-4e02-46a0-aee8-111bad303609)
+
+Check incorrect value
+
+![Check incorrect value](https://github.com/user-attachments/assets/63222271-d54f-4d0c-b704-30c603184c82)
+
+---
 === SIMULATION STATUS 27.07: rewrite tb. Described testbench that now semi automated. Result of sim - success. ===
 ![image](https://github.com/user-attachments/assets/4a7dc289-9b42-4ee3-9122-78cd2b405734)
 
