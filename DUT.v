@@ -18,23 +18,31 @@ always #5
    clk <= ~clk;
 
 initial begin
-$display("=============================== Testbench started... =================================");
+$display("=============================== Testbench started... =========================================");
    clk <= 0;
    rst <= 1;
 #20
    rst <= 0;
 end
 
-always @(DUT.dual_port_ram.ram[16])
+always @(posedge clk)
 begin
-   $display($time," RAM[16] (0x40 address) value = '%h", DUT.dual_port_ram.ram[16]);
-   if (DUT.dual_port_ram.ram[16] == 32'h00000031)
+   $display($time," Current address = '%h", DUT.cpu.instr_addr_o, " || RAM[16] value = '%h", DUT.dual_port_ram.ram[16]);
+end
+
+always @(posedge clk)
+begin
+   if (DUT.cpu.instr_addr_o == 32'h00000018)
    begin
-      $display("======================================================================================");
-      $display("Simulation complete. Value in RAM with address 0x40 after last instruction is correct.");
-      $display("======================================================================================");
-      $display("======================================================================================");
-      $stop;
+      if (DUT.dual_port_ram.ram[16] == 32'd49)
+         $display(" Cool, right value ");
+//      $display("==============================================================================================");
+//      $display("=== Simulation complete. Value in RAM with address 0x40 after last instruction is correct. ===");
+//      $display("==============================================================================================");
+//      $display("==============================================================================================");
+//      $stop;
+      else
+         $display(" Not cool, incorrect value ");
    end
 end
 
