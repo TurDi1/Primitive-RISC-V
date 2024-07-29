@@ -21,7 +21,7 @@ output  [XLEN-1:0]  instr_addr_o; // 32-bit instruction address
 input   [XLEN-1:0]  instr_data_i;  // 32-bit instruction data
 
 output              mem_we_o;      // Memory write strobe
-output reg  [XLEN-1:0]  mem_addr_o;    // 32-bit memory address
+output  [XLEN-1:0]  mem_addr_o;    // 32-bit memory address
 input   [XLEN-1:0]  mem_data_i;    // 32-bit read memory data
 output  [XLEN-1:0]  mem_data_o;    // 32-bit write memory data
 
