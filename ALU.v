@@ -19,24 +19,25 @@ input      [2:0]        alucontrol;
 output     [XLEN-1:0]   result;
 output                  zero;
 
-//=== Wire's, reg's and etc... ===
+//===== Wire's, reg's and etc... =====
 wire         [XLEN-1:0]  sum_out;
 
 reg         [XLEN-1:0]  result_reg;
 wire        [XLEN-1:0]  result_wire;
 
-//=== Assignments ===
-assign zero       = ~|result;    // NOR all bit's of result
+wire        [XLEN-1:0] mux_input [3 : 0];
 
-assign result     = result_reg;  // 
+//===== Assignments =====
+assign zero         = ~|result;           // NOR all bit's of result
+assign result       = result_wire;
 
-always @(clk or result_wire)
-begin
-   if (clk)
-      result_reg  <= result_wire;
-end
+// Assign values to MUX input wire array
+assign mux_input[0] = sum_out[XLEN-1:0];
+assign mux_input[1] = sum_out[XLEN-1:0];
+assign mux_input[2] = a & b;
+assign mux_input[3] = a | b;
 
-//=== Instatiations ===
+//===== Instatiations =====
 adder_n_subtractor adder_sub (
    .a       ( a[XLEN-1:0] ),
    .b       ( b[XLEN-1:0] ),
@@ -45,10 +46,7 @@ adder_n_subtractor adder_sub (
 );
 
 mux_4_1 out_mux (
-   .a       ( sum_out[XLEN-1:0] ),
-   .b       ( sum_out[XLEN-1:0] ),
-   .c       ( a & b ),
-   .d       ( a | b ),
+   .a       ( mux_input ),
    .s       ( alucontrol[1:0] ),
    .f       ( result_wire )
 );
