@@ -60,30 +60,38 @@ wire               ResultSrc_wire;
 // Others's wire's
 wire   [XLEN-1:0]  Result_wire;
 
+wire   [XLEN-1:0]  pc_mux_input_wire [1:0];
+wire   [XLEN-1:0]  alusrc_mux_input_wire [1:0];
+wire   [XLEN-1:0]  resultsrc_mux_input_wire [1:0];
+
 //=== Assignments ===
 assign instr_addr_o  = pc_wire;        // address bus for instruction memory
 assign mem_data_o    = rd2_wire;       // assign to data output memory bus
 assign mem_addr_o    = ALUResult_wire; // assign to address output memory bus 
 assign mem_we_o      = MemWrite_wire;  // assign to write enable output signal from ctrl unit
 
+assign pc_mux_input_wire[0]         = PCPlus4_wire;
+assign pc_mux_input_wire[1]         = PCTarget_wire; 
+assign alusrc_mux_input_wire[0]     = rd2_wire;
+assign alusrc_mux_input_wire[1]     = ImmExt_wire;
+assign resultsrc_mux_input_wire[0]  = ALUResult_wire;
+assign resultsrc_mux_input_wire[1]  = mem_data_i;
+
 //=== Instatiations ===
-mux_2_1 pc_mux (
-   .i0      ( PCPlus4_wire ),
-   .i1      ( PCTarget_wire ),
+mux_param #(.N(2)) pc_mux (
+   .a       ( pc_mux_input_wire ),
    .s       ( PCSrc_wire ),
    .f       ( pc_next_wire )
 );
 
-mux_2_1 alusrc (
-   .i0      ( rd2_wire ),
-   .i1      ( ImmExt_wire ),
+mux_param #(.N(2)) alusrc (
+   .a       ( alusrc_mux_input_wire ),
    .s       ( ALUSrc_wire ),
    .f       ( SrcB_wire )
 );
 
-mux_2_1 resultsrc (
-   .i0       ( ALUResult_wire ),
-   .i1       ( mem_data_i ),
+mux_param #(.N(2)) resultsrc (
+   .a        ( resultsrc_mux_input_wire ),
    .s        ( ResultSrc_wire ),
    .f        ( Result_wire )
 );

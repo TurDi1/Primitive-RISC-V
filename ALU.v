@@ -45,7 +45,7 @@ adder_n_subtractor adder_sub (
    .s       ( sum_out[XLEN-1:0] )
 );
 
-mux_4_1 out_mux (
+mux_param #(.N(4)) out_mux (
    .a       ( mux_input ),
    .s       ( alucontrol[1:0] ),
    .f       ( result_wire )
