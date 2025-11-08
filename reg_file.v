@@ -1,28 +1,45 @@
 module reg_file
 #(
-   parameter XLEN = 32
+   parameter N     = 32,  // Number of registers in reg file
+   parameter WIDTH = 32   // Width of registers
 )
 (
-input    clk,            // input clock
-input    we3,            // write enable signal to registers
-input    [4:0] a1,       // first read address bus
-input    [4:0] a2,       // second read address bus
-input    [4:0] a3,       // third write address bus
-input    [XLEN-1:0] wd3, // data bus for write to registers
-output   [XLEN-1:0] rd1, // first data bus for read
-output   [XLEN-1:0] rd2  // second data bus for read 
+   clk,
+   we3,
+   a1,
+   a2,
+   a3,
+   wd3,
+   rd1,
+   rd2
 );
+//==================================
+//        PORTS DESCRIPTION
+//==================================
+input                         clk;  // Clock input
+input                         we3;  // Write enable input
+input   [$clog2(N) - 1 : 0]   a1;   // First read address bus
+input   [$clog2(N) - 1 : 0]   a2;   // Second read address bus
+input   [$clog2(N) - 1 : 0]   a3;   // Third write address bus
+input   [WIDTH - 1 : 0]       wd3;  // Bus with data for write
+output  [WIDTH - 1 : 0]       rd1;  // First bus with data for read
+output  [WIDTH - 1 : 0]       rd2;  // Second bus with data for read
 
-//=== Wire's, reg's and etc... ===
-reg [31:0] x[XLEN-1:0];   // Registers
+//==================================
+//      WIRE'S, REG'S and etc
+//==================================
+reg [WIDTH - 1 : 0] x [N - 1 : 0];  // Registers
 
-//=== Assignments ===
+//==================================
+//           ASSIGNMENTS
+//==================================
 assign rd1 = (a1 != 0) ? x[a1] : 0;
 assign rd2 = (a2 != 0) ? x[a2] : 0;
 
-//=== Logic section ===
+//==================================
+//              Logic
+//==================================
 always @(posedge clk)
    if (we3) 
       x[a3] <= wd3;
-
 endmodule 

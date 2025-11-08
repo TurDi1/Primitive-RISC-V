@@ -14,6 +14,9 @@ module RV32
    mem_data_i,
    mem_data_o
 );
+//==================================
+//        PORTS DESCRIPTION
+//==================================
 input               clk_i;         // Clock input
 input               rst_i;         // Reset input
 
@@ -25,7 +28,9 @@ output  [XLEN-1:0]  mem_addr_o;    // 32-bit memory address
 input   [XLEN-1:0]  mem_data_i;    // 32-bit read memory data
 output  [XLEN-1:0]  mem_data_o;    // 32-bit write memory data
 
-//=== Wire's, reg's and etc... ===
+//==================================
+//      WIRE'S, REG'S and etc
+//==================================
 // wire's for program counter
 wire   [XLEN-1:0]  pc_next_wire;
 wire   [XLEN-1:0]  pc_wire;
@@ -64,7 +69,9 @@ wire   [XLEN-1:0]  pc_mux_input_wire [1:0];
 wire   [XLEN-1:0]  alusrc_mux_input_wire [1:0];
 wire   [XLEN-1:0]  resultsrc_mux_input_wire [1:0];
 
-//=== Assignments ===
+//==================================
+//           ASSIGNMENTS
+//==================================
 assign instr_addr_o  = pc_wire;        // address bus for instruction memory
 assign mem_data_o    = rd2_wire;       // assign to data output memory bus
 assign mem_addr_o    = ALUResult_wire; // assign to address output memory bus 
@@ -77,26 +84,36 @@ assign alusrc_mux_input_wire[1]     = ImmExt_wire;
 assign resultsrc_mux_input_wire[0]  = ALUResult_wire;
 assign resultsrc_mux_input_wire[1]  = mem_data_i;
 
-//=== Instatiations ===
-mux_param #(.N(2)) pc_mux (
-   .a       ( pc_mux_input_wire ),
+//==================================
+//          INSTATIATIONS
+//==================================
+mux_param #(
+   .N       ( 2 )
+) pc_mux (
+   .i       ( pc_mux_input_wire ),
    .s       ( PCSrc_wire ),
    .f       ( pc_next_wire )
 );
 
-mux_param #(.N(2)) alusrc (
-   .a       ( alusrc_mux_input_wire ),
+mux_param #(
+   .N       ( 2 )
+) alusrc (
+   .i       ( alusrc_mux_input_wire ),
    .s       ( ALUSrc_wire ),
    .f       ( SrcB_wire )
 );
 
-mux_param #(.N(2)) resultsrc (
-   .a        ( resultsrc_mux_input_wire ),
+mux_param #(
+   .N       ( 2 )
+) resultsrc (
+   .i        ( resultsrc_mux_input_wire ),
    .s        ( ResultSrc_wire ),
    .f        ( Result_wire )
 );
 
-pc program_cntr (
+pc #(
+   .WIDTH   ( 32 )
+) program_cntr (
    .rst     ( rst_i ),
    .clk     ( clk_i ),
    .en      ( 1'b1 ),
@@ -122,7 +139,10 @@ extend extnd(
    .immext  ( ImmExt_wire )
 );
 
-reg_file register_file (
+reg_file #(
+   .N       ( 32 ),
+   .WIDTH   ( 32 )
+) register_file (
    .clk     ( clk_i ),
    .we3     ( RegWrite_wire ),
    .a1      ( instr_data_i[19:15] ),

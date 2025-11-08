@@ -1,19 +1,23 @@
 module mux_param
 #(
-   parameter N = 2,
-   parameter XLEN = 32
+   parameter N     = 2,  // Number of input buses
+   parameter WIDTH = 32  // Width of buses
 )
 (
-   a,
+   i,
    s,
    f
 );
-// ===== Ports description =====
-input    [XLEN-1:0] a [N - 1 : 0];  // Data input bus
-input    [$clog2(N) - 1 : 0]    s;  // Selector input bus
-output   [XLEN-1:0]             f;  // Data output
+//==================================
+//        PORTS DESCRIPTION
+//==================================
+input   [WIDTH - 1 : 0]      i [N - 1 : 0];  // Data input buses
+input   [$clog2(N) - 1 : 0]  s;              // Selector input bus
+output  [WIDTH - 1 : 0]      f;              // Data output bus
 
-// ===== Assignments =====
-assign f = a[s];
-//
+//==================================
+//           ASSIGNMENTS
+//==================================
+assign f = i[s];
+
 endmodule 

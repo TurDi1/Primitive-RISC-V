@@ -5,25 +5,33 @@ module alu_decoder (
    aluop,
    alucontrol
 );
-
+//==================================
+//        PORTS DESCRIPTION
+//==================================
 input              opb5;
 input       [2:0]  funct3;
 input              funct7b5;
 input       [1:0]  aluop;
 output reg  [2:0]  alucontrol;
 
-//=== Wire's, reg's and etc... ===
+//==================================
+//      WIRE'S, REG'S and etc
+//==================================
 wire RtypeSub;
 
-//=== Assignments ===
+//==================================
+//           ASSIGNMENTS
+//==================================
 assign RtypeSub = funct7b5 & opb5;
 
-//=== Logic section ===
+//==================================
+//              Logic
+//==================================
 always @(*)
 begin
    case(aluop)
-      2'b00: alucontrol = 3'b000;   // addition
-      2'b01: alucontrol = 3'b001;   // subtraction
+      2'b00: alucontrol = 3'b000;                  // addition
+      2'b01: alucontrol = 3'b001;                  // subtraction
       default: case(funct3)
                   3'b000: if (RtypeSub)
                               alucontrol = 3'b001; //sub

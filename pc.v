@@ -1,7 +1,6 @@
-//=== Program counter module ===
 module pc
 #(
-   parameter XLEN = 32
+   parameter WIDTH = 32
 )
 
 (
@@ -11,20 +10,28 @@ module pc
    pc,
    pc_next
 );
+//==================================
+//        PORTS DESCRIPTION
+//==================================
+input                    rst;     // Reset input
+input                    clk;     // Clock input
+input                    en;      // Enable input
+output  [WIDTH - 1 : 0]  pc;      // Output bus with current value of program counter 
+input   [WIDTH - 1 : 0]  pc_next; // Input bus with next value of program counter
 
-input                 rst;     // reset input
-input                 clk;     // clock input
-input                 en;      // enable input
-output  [XLEN-1:0]    pc;      // output bus with output value of program counter 
-input   [XLEN-1:0]    pc_next; // input bus with next value of program counter
+//==================================
+//      WIRE'S, REG'S and etc
+//==================================
+reg  [WIDTH - 1 : 0]  pc_reg;  // Point counter reg
 
-//=== Wire's, reg's and etc... ===
-reg  [XLEN-1:0]  pc_reg;     // point counter register
-
-//=== Assignments ===
+//==================================
+//           ASSIGNMENTS
+//==================================
 assign pc = pc_reg;
 
-//=== Logic section ===
+//==================================
+//              Logic
+//==================================
 always @ (posedge clk or posedge rst)
 begin
    if (rst)

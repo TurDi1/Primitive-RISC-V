@@ -11,7 +11,9 @@ module ctrl_unit (
    immsrc,
    regwrite
 );
-
+//==================================
+//        PORTS DESCRIPTION
+//==================================
 input    [6:0]  op;
 input    [2:0]  funct3;
 input           funct7b5;
@@ -24,16 +26,22 @@ output          alusrc;
 output   [1:0]  immsrc;
 output          regwrite;
 
-//=== Wire's, reg's and etc... ===
+//==================================
+//      WIRE'S, REG'S and etc
+//==================================
 wire                Branch_wire;
 wire         [1:0]  aluop_wire;
 wire         [1:0]  resultsrc_wire;
 
-//=== Assignments ===
+//==================================
+//           ASSIGNMENTS
+//==================================
 assign pcsrc      = Branch_wire & zero;
 assign resultsrc  = resultsrc_wire[0];
 
-//=== Instatiations ===
+//==================================
+//          INSTATIATIONS
+//==================================
 alu_decoder alu_dec (
    .opb5        ( op[5] ),
    .funct3      ( funct3 ),
