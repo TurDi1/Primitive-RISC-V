@@ -25,7 +25,7 @@ output          jump;
 //==================================
 //      WIRE'S, REG'S and etc
 //==================================
-reg      [10:0]      control_signals;
+reg  [10:0]  control_signals;
 
 //==================================
 //           ASSIGNMENTS

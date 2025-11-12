@@ -1,7 +1,7 @@
 module dpram
 #(
-   parameter DATA_WIDTH=32,
-   parameter ADDR_WIDTH=32
+   parameter DATA_WIDTH = 32,
+   parameter ADDR_WIDTH = 32
 )
 (
    data_a,
@@ -17,24 +17,24 @@ module dpram
 //==================================
 //        PORTS DESCRIPTION
 //==================================
-input       [DATA_WIDTH -1 : 0]   data_a;
-input       [DATA_WIDTH -1 : 0]   data_b;
-input       [ADDR_WIDTH -1 : 0]   addr_a;
-input       [ADDR_WIDTH -1 : 0]   addr_b;
-input                             we_a;
-input                             we_b;
-input                             clk;
-output reg  [DATA_WIDTH -1 : 0]   q_a;
-output reg  [DATA_WIDTH -1 : 0]   q_b;
+input       [DATA_WIDTH - 1 : 0]   data_a;
+input       [DATA_WIDTH - 1 : 0]   data_b;
+input       [ADDR_WIDTH - 1 : 0]   addr_a;
+input       [ADDR_WIDTH - 1 : 0]   addr_b;
+input                              we_a;
+input                              we_b;
+input                              clk;
+output reg  [DATA_WIDTH - 1 : 0]   q_a;
+output reg  [DATA_WIDTH - 1 : 0]   q_b;
 
 //==================================
 //      WIRE'S, REG'S and etc
 //==================================
-reg [DATA_WIDTH -1 : 0] ram [31 : 0];
+reg [DATA_WIDTH - 1 : 0] ram [31 : 0];
 
 // Initialize memory with hex file. Only for simulation
 initial begin
-   $readmemh("/home/turdi/Quartus_projects/sobes_project/sources/Modules/verilog/tb_mach_codes.hex",ram);
+   $readmemh("/home/turdi/Quartus_projects/sobes_project/sources/Modules/verilog/tb_mach_codes.hex", ram);
 end   
 
 //==================================

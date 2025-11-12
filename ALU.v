@@ -1,9 +1,8 @@
 module ALU 
 #(
-   parameter XLEN = 32
+   parameter WIDTH = 32
 )
 (
-   clk,
    a,
    b,
    alucontrol,
@@ -13,48 +12,52 @@ module ALU
 //==================================
 //        PORTS DESCRIPTION
 //==================================
-input                   clk;
-input      [XLEN-1:0]   a;
-input      [XLEN-1:0]   b;
-input      [2:0]        alucontrol;
-output     [XLEN-1:0]   result;
-output                  zero;
+input   [WIDTH - 1 : 0]  a;
+input   [WIDTH - 1 : 0]  b;
+input   [2:0]            alucontrol;
+output  [WIDTH - 1 : 0]  result;
+output                   zero;
 
 //==================================
 //      WIRE'S, REG'S and etc
 //==================================
-wire         [XLEN-1:0]  sum_out;
+wire    [WIDTH - 1 : 0]  s_wire;
 
-reg         [XLEN-1:0]  result_reg;
-wire        [XLEN-1:0]  result_wire;
-
-wire        [XLEN-1:0] mux_input [3 : 0];
+wire    [WIDTH - 1 : 0]  input_buses [3 : 0];
+wire    [WIDTH - 1 : 0]  result_wire;
 
 //==================================
 //           ASSIGNMENTS
 //==================================
-assign zero         = ~|result;           // NOR all bit's of result
-assign result       = result_wire;
+// Flags and result
+//assign zero         = ~|result;
+assign zero           = ~|result_wire;           // NOR all bit's of result
+assign result         = result_wire;
 
 // Assign values to MUX input wire array
-assign mux_input[0] = sum_out[XLEN-1:0];
-assign mux_input[1] = sum_out[XLEN-1:0];
-assign mux_input[2] = a & b;
-assign mux_input[3] = a | b;
+assign input_buses[0] = s_wire [WIDTH - 1 : 0];  // Zero and first buses are result of add_n_sub
+assign input_buses[1] = s_wire [WIDTH - 1 : 0];  // 
+assign input_buses[2] = a & b;                   // AND result of a & b buses
+assign input_buses[3] = a | b;                   // OR result of a & b buses
 
 //==================================
 //          INSTATIATIONS
 //==================================
-adder_n_subtractor adder_sub (
-   .a       ( a[XLEN-1:0] ),
-   .b       ( b[XLEN-1:0] ),
+adder_n_subtractor #(
+   .WIDTH   ( WIDTH )
+) add_n_sub (
+   .a       ( a ),
+   .b       ( b ),
    .c       ( alucontrol[0] ),
-   .s       ( sum_out[XLEN-1:0] )
+   .s       ( s_wire )
 );
 
-mux_param #(.N(4)) out_mux (
-   .i       ( mux_input ),
-   .s       ( alucontrol[1:0] ),
-   .f       ( result_wire )
+mux_param #(
+   .N     ( 4 ),
+   .WIDTH ( WIDTH )
+) alu_mux (
+   .i     ( input_buses ),
+   .s     ( alucontrol[1:0] ),
+   .f     ( result_wire )
 );
 endmodule 

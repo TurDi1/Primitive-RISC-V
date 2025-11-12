@@ -14,30 +14,30 @@ module ctrl_unit (
 //==================================
 //        PORTS DESCRIPTION
 //==================================
-input    [6:0]  op;
-input    [2:0]  funct3;
+input   [6:0]   op;
+input   [2:0]   funct3;
 input           funct7b5;
 input           zero;
 output          pcsrc;
 output          resultsrc;
 output          memwrite;
-output   [2:0]  alucontrol;
+output  [2:0]   alucontrol;
 output          alusrc;
-output   [1:0]  immsrc;
+output  [1:0]   immsrc;
 output          regwrite;
 
 //==================================
 //      WIRE'S, REG'S and etc
 //==================================
-wire                Branch_wire;
-wire         [1:0]  aluop_wire;
-wire         [1:0]  resultsrc_wire;
+wire            Branch_wire;
+wire     [1:0]  aluop_wire;
+wire     [1:0]  resultsrc_wire;
 
 //==================================
 //           ASSIGNMENTS
 //==================================
-assign pcsrc      = Branch_wire & zero;
-assign resultsrc  = resultsrc_wire[0];
+assign pcsrc     = Branch_wire & zero;
+assign resultsrc = resultsrc_wire[0];
 
 //==================================
 //          INSTATIATIONS
