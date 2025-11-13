@@ -1,8 +1,7 @@
 /* Single clock RISC-V CPU top module */
 module RV32
 #(
-   parameter WIDTH        = 32,
-   parameter NUM_OF_WORDS = 32
+   parameter WIDTH        = 32
 )
 
 (
@@ -154,7 +153,6 @@ extend extnd(
 
 // Register file module
 reg_file #(
-   .N       ( NUM_OF_WORDS ),
    .WIDTH   ( WIDTH )
 ) register_file (
    .clk     ( clk_i ),

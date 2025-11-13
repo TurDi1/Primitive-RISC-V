@@ -34,7 +34,7 @@ reg [DATA_WIDTH - 1 : 0] ram [31 : 0];
 
 // Initialize memory with hex file. Only for simulation
 initial begin
-   $readmemh("/home/turdi/Quartus_projects/sobes_project/sources/Modules/verilog/tb_mach_codes.hex", ram);
+   $readmemh("tb_mach_codes.hex", ram);
 end   
 
 //==================================
