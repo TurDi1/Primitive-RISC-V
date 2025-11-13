@@ -30,6 +30,7 @@ output reg  [DATA_WIDTH - 1 : 0]   q_b;
 //==================================
 //      WIRE'S, REG'S and etc
 //==================================
+(* ram_init_file = "tb_mach_codes.hex" *)
 reg [DATA_WIDTH - 1 : 0] ram [31 : 0];
 
 // Initialize memory with hex file. Only for simulation
