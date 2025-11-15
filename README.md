@@ -1,65 +1,39 @@
 # Primitive-RISC-V
 
----
-=== SIMULATION STATUS 29.07: Fixed the testbench. ===
+__Repository structure__
 
-Check correct value
+    .
+    ├── adder.v                 # Adder module
+    ├── adder_n_subtractor.v    # Adderand subtractor module
+    ├── alu.v                   # ALU module
+    ├── alu_decoder.v           # ALU decoder module
+    ├── ctrl_unit.v             # Control unit module
+    ├── dpram.v                 # DPRAM for instruction and data memory
+    ├── extend.v                # Extend module
+    ├── main_decoder.v          # Main decoder module
+    ├── mux_param.v             # Parametrized MUX module
+    ├── pc.v                    # Program counter module
+    ├── reg_file.v              # Register file module
+    ├── riscv.v                 # Single cycle proccessor top module
+    ├── riscv_tb.v              # Testbench for single cycle proccesor riscv
+    ├── tb_mach_codes.hex       # HEX-file with program for testbench
+    └── README.md
 
-![Check correct value](https://github.com/user-attachments/assets/7bee26b8-4e02-46a0-aee8-111bad303609)
+----
 
-Check incorrect value
-
-![Check incorrect value](https://github.com/user-attachments/assets/63222271-d54f-4d0c-b704-30c603184c82)
-
----
-=== SIMULATION STATUS 27.07: rewrite tb. Described testbench that now semi automated. Result of sim - success. ===
-![image](https://github.com/user-attachments/assets/4a7dc289-9b42-4ee3-9122-78cd2b405734)
-
----
-=== SIMULATION STATUS 24.07: rewrite memory. Described dual port ram. Result of sim - success. ===
-
-Data in dual port ram on init:
-
-![dualport_init_modelsim](https://github.com/user-attachments/assets/2573814a-8ac2-4e58-9718-9707425768c1)
-
----
-
-Data in ram after run all instructions:
-
-![dualport_after_instructions_modelsim](https://github.com/user-attachments/assets/c9b5ecf0-b02f-43bf-8b92-ca261fc35871)
-
----
-=== SIMULATION STATUS 22.07: An attempt to rewrite the testbench to suit myself. Writing a testbench from scratch, using machine codes as a basis. Result - success. ===
-
----
-
-=== SIMULATION STATUS 18.07: The first two instructions are carried out. Then an error with mem_address. ===
-   Adder/subtractor  was rewrited. Corrected data from adder/subtractor corectly arrive to mux4:1, but correct value from mux output arrive to output ALU incorrect.
-
----
-
-Example of primitive single clock cycle RISC-V processor.
-
-Architecture of processor based on:
+This is example of primitive single-cycle RISC-V processor that architecture based on "Figure 7.12 Complete single-cycle processor" from book Digital Design and Computer Architecture RISC-V Edition:
 ![image](https://github.com/user-attachments/assets/618a5477-ddd7-4a22-80d5-e74d05265a0d)
 
----
+* Note: Two memory modules for instructions and data from Figure 7.12 replaced to DPRAM memory that contain data and instructions.
 
-Result's of simulation base modules:
----
-
-MUX 2:1 ![mux_2_1_waveform](https://github.com/user-attachments/assets/bcbe9de8-0c03-4c12-8f4a-a2886447684e)
----
-
-MUX 4:1 ![mux_4_1](https://github.com/user-attachments/assets/6e767ea9-5e93-4f19-b25f-eda848b4cb44)
----
-
-ADDER ![adder_waveform](https://github.com/user-attachments/assets/9dbab0e0-8573-4644-9e3d-23a010301310)
----
-
-PC 
-![pc_waveform](https://github.com/user-attachments/assets/34fa43cd-8d58-42e0-92d7-c28a83bac988)
----
-
-
-
+Also repository have testbench for processor. This tb check result of execution of this program on address 0x40:
+```
+addi x31, x0, 3
+sw x31, 64(x0)
+lw x1, 64(x0)
+addi x2, x1, 123
+addi x3, x2, 51
+andi x3, x3, 63
+sw x3, 64(x0)
+addi x0, x0, 0
+```

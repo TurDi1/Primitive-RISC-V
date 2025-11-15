@@ -1,5 +1,5 @@
 /* Single clock RISC-V CPU top module */
-module RV32
+module riscv
 #(
    parameter WIDTH        = 32
 )
@@ -166,7 +166,7 @@ reg_file #(
 );
 
 // ALU module
-ALU #(
+alu #(
    .WIDTH      ( WIDTH )
 ) alu (
    .a          ( rd1_wire ),

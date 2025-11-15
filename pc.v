@@ -22,7 +22,7 @@ input   [WIDTH - 1 : 0]  pc_next; // Input bus with next value of program counte
 //==================================
 //      WIRE'S, REG'S and etc
 //==================================
-reg  [WIDTH - 1 : 0]  pc_reg;  // Point counter reg
+reg     [WIDTH - 1 : 0]  pc_reg;  // Point counter reg
 
 //==================================
 //           ASSIGNMENTS

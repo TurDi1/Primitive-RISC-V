@@ -58,12 +58,13 @@ begin
 
     fork : waiting_last_instruction
     begin
-        wait (riscv.instr_addr_o == 32'h00000018);
+        wait (riscv_single_cycle.instr_addr_o == 32'h0000001c);
         $display("-----------------------------------------------");
         $display("[TB INFO]  RISCV RECEIVED LAST INSTRUCTION... ");
         $display("TIME:  %t", $realtime);
         $display("-----------------------------------------------");
-        $display("");
+        $display("");        
+        @(posedge sys_clk_reg);
         disable waiting_last_instruction;
     end
     
@@ -99,9 +100,9 @@ end
 //==================================
 //          INSTATIATIONS
 //==================================
-RV32 #(
+riscv #(
     .WIDTH ( WIDTH )
-) riscv (
+) riscv_single_cycle (
     .clk_i        ( sys_clk_reg     ),
     .rst_i        ( sys_rst_reg     ),
     .instr_addr_o ( instr_addr_wire ),
