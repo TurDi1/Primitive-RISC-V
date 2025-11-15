@@ -30,16 +30,17 @@ assign RtypeSub = funct7b5 & opb5;
 always @(*)
 begin
    case(aluop)
-      2'b00: alucontrol = 3'b000;                  // addition
-      2'b01: alucontrol = 3'b001;                  // subtraction
+      2'b00: alucontrol = 3'b000;                  // lw, sw instr
+      2'b01: alucontrol = 3'b001;                  // beq
       default: case(funct3)
                   3'b000: if (RtypeSub)
-                              alucontrol = 3'b001; //sub
+                              alucontrol = 3'b001; // add
                           else
-                              alucontrol = 3'b000; // add, addi
-                  3'b110: alucontrol = 3'b011;     // or, ori
-                  3'b111: alucontrol = 3'b010;     // and, andi
-                  default: alucontrol = 3'bxxx;    //
+                              alucontrol = 3'b000; // sub
+                  3'b010: alucontrol = 3'b101;     // slt         
+                  3'b110: alucontrol = 3'b011;     // or
+                  3'b111: alucontrol = 3'b010;     // and
+                  default: alucontrol = 3'bxxx; 
                endcase
    endcase
 end
