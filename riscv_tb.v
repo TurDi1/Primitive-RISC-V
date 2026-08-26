@@ -5,7 +5,8 @@ module riscv_tb ();
 //           PARAMETERS
 //==================================
 parameter CLK_WIDTH       = 10ns;  // 50 MHz
-parameter WIDTH           = 32;
+parameter WIDTH           = 32;    // Data width
+parameter IMEM_ADDR_WIDTH = 5;
 
 parameter LAST_INSTR_ADDR = 32'h0000001c;
 parameter TIMEOUT_CYCLES  = 50;
@@ -17,16 +18,16 @@ int unsigned success;         // Success simulation variable
 //      WIRE'S, REG'S and etc
 //==================================
 // System required registers
-reg                        sys_clk_reg;
-reg                        sys_rst_reg;
+reg                                  sys_clk_reg;
+reg                                  sys_rst_reg;
 
-wire     [WIDTH - 1 : 0]   instr_addr_wire;
-wire     [WIDTH - 1 : 0]   instr_data_wire;
+wire     [WIDTH - 1 : 0]             instr_addr_wire;
+wire     [WIDTH - 1 : 0]             instr_data_wire;
 
-wire                       we_wire;
-wire     [WIDTH - 1 : 0]   mem_addr_o_wire;
-wire     [WIDTH - 1 : 0]   mem_data_i_wire;
-wire     [WIDTH - 1 : 0]   mem_data_o_wire;
+wire                                 we_wire;
+wire     [WIDTH - 1 : 0]             mem_addr_o_wire;
+wire     [WIDTH - 1 : 0]             mem_data_i_wire;
+wire     [WIDTH - 1 : 0]             mem_data_o_wire;
 
 
 //==================================
@@ -82,10 +83,12 @@ begin
     join_any
     
     // Checking DPRAM register value with address 0x40
-    if (dual_port_ram.ram[16] == 32'h00000031)
-        success = 1;
-    else
-        success = 0;
+
+    // NEED TO REWOOOORK!!!!!!!!!!!!!
+    // if (dual_port_ram.ram[16] == 32'h00000031)
+    //     success = 1;
+    // else
+    //     success = 0;
     
     $display("");
     $display("==================== Results of simulation ====================");
@@ -116,20 +119,32 @@ riscv #(
     .mem_data_o   ( mem_data_o_wire )
 );
 
-dpram #(
+imem  #(
     .DATA_WIDTH ( WIDTH ),
-    .ADDR_WIDTH ( WIDTH )
-) dual_port_ram (
-    .data_a ( 32'b0           ), // Connected to zero for read-only port
-    .data_b ( mem_data_o_wire ),
-    .addr_a ( instr_addr_wire ),
-    .addr_b ( mem_addr_o_wire ),
-    .we_a   ( 1'b0            ), // Write disabled for port A
-    .we_b   ( we_wire         ),
-    .clk    ( sys_clk_reg     ),
-    .q_a    ( instr_data_wire ),
-    .q_b    ( mem_data_i_wire )
+    .ADDR_WIDTH ( IMEM_ADDR_WIDTH )
+) instr_mem (
+    .addr ( instr_addr_wire[IMEM_ADDR_WIDTH + 1 : 2] ),
+    .data ( instr_data_wire )
 );
+
+
+
+// TB ON REWORK!!!
+
+// dpram #(
+//     .DATA_WIDTH ( WIDTH ),
+//     .ADDR_WIDTH ( WIDTH )
+// ) dual_port_ram (
+//     .data_a ( 32'b0           ), // Connected to zero for read-only port
+//     .data_b ( mem_data_o_wire ),
+//     .addr_a ( instr_addr_wire ),
+//     .addr_b ( mem_addr_o_wire ),
+//     .we_a   ( 1'b0            ), // Write disabled for port A
+//     .we_b   ( we_wire         ),
+//     .clk    ( sys_clk_reg     ),
+//     .q_a    ( instr_data_wire ),
+//     .q_b    ( mem_data_i_wire )
+// );
 
 //==================================
 //         TESTBENCH TASKS
