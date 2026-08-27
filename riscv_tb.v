@@ -10,7 +10,6 @@ parameter IMEM_ADDR_WIDTH = 5;
 parameter DMEM_ADDR_WIDTH = 5;
 
 parameter LAST_INSTR_ADDR = 32'h0000001c;
-parameter TIMEOUT_CYCLES  = 50;
 
 int unsigned rst_time;        // Variable of time for reset
 int unsigned success;         // Success simulation variable
@@ -54,6 +53,8 @@ begin
     $display("-----------------------------------");
     $display("");
     
+    success = 0;
+
     system_reset();
 
     $display("-----------------------------------------------");
@@ -84,24 +85,18 @@ begin
     join_any
     
     // Checking DPRAM register value with address 0x40
-    // TB ON REWORK!!!
-    // DON'T USE
-
-
-
-    // if (dual_port_ram.ram[16] == 32'h00000031)
-    //     success = 1;
-    // else
-    //     success = 0;
+    if (ram.ram[16] == 32'h00000031)
+        success = 1;
+    else
+        success = 0;
     
     $display("");
     $display("==================== Results of simulation ====================");
     if (success == 1)
-        $display("==       VALUE IN DPRAM AT ADDRESS 0x40 IS CORRECT, %h ==", dual_port_ram.ram[16]);
+        $display("==     VALUE IN DPRAM AT ADDRESS 0x40 IS CORRECT, %h ==", ram.ram[16]);
     else
-        $display("==       VALUE IN DPRAM AT ADDRESS 0x40 IS INCORRECT, %h ==", dual_port_ram.ram[16]);
+        $display("==     VALUE IN DPRAM AT ADDRESS 0x40 IS INCORRECT, %h ==", ram.ram[16]);
     $display("===============================================================");
-    $display("");
     $display("");
     
     $finish;
@@ -126,15 +121,15 @@ riscv #(
 imem #(
     .DATA_WIDTH ( WIDTH ),
     .ADDR_WIDTH ( IMEM_ADDR_WIDTH )
-) instr_mem (
+) rom (
     .addr       ( instr_addr_wire[IMEM_ADDR_WIDTH + 1 : 2] ),
     .data       ( instr_data_wire )
 );
 
 dmem #(
-   .DATA_WIDTH ( WIDTH ),
-   .ADDR_WIDTH ( DMEM_ADDR_WIDTH )
-) data_mem (
+   .DATA_WIDTH  ( WIDTH ),
+   .INDEX_WIDTH ( DMEM_ADDR_WIDTH )
+) ram (
    .data_wr    ( mem_data_o_wire ),
    .addr       ( mem_addr_o_wire[DMEM_ADDR_WIDTH + 1 : 2] ),
    .we         ( we_wire ),

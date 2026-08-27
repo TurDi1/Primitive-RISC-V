@@ -13,16 +13,16 @@ module dmem
 //==================================
 //        PORTS DESCRIPTION
 //==================================
-input       [DATA_WIDTH - 1 : 0]   data_wr;
-input       [ADDR_WIDTH - 1 : 0]   addr;
-input                              we;
-input                              clk;
-output      [DATA_WIDTH - 1 : 0]   data_rd;
+input    [DATA_WIDTH - 1 : 0]   data_wr;
+input    [INDEX_WIDTH - 1 : 0]  addr;
+input                           we;
+input                           clk;
+output   [DATA_WIDTH - 1 : 0]   data_rd;
 
 //==================================
 //      WIRE'S, REG'S and etc
 //==================================
-reg [DATA_WIDTH - 1 : 0] ram [(2 ** ADDR_WIDTH) - 1 : 0];
+reg [DATA_WIDTH - 1 : 0] ram [(2 ** INDEX_WIDTH) - 1 : 0];
 
 //==================================
 //          ASSIGNMENTS

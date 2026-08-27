@@ -16,6 +16,7 @@ output  [DATA_WIDTH - 1 : 0]   data;
 //==================================
 //      WIRE'S, REG'S and etc
 //==================================
+(* ram_init_file = "tb_mach_codes.hex" *)
 reg [DATA_WIDTH - 1 : 0] rom [(2 ** ADDR_WIDTH) - 1 : 0];
 
 //==================================

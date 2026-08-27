@@ -8,8 +8,9 @@ __Repository structure__
     ├── alu.v                   # ALU module
     ├── alu_decoder.v           # ALU decoder module
     ├── ctrl_unit.v             # Control unit module
-    ├── dpram.v                 # DPRAM for instruction and data memory
+    ├── dmem.v                  # Data memory module
     ├── extend.v                # Extend module
+    ├── imem.v                  # instruction memory module
     ├── main_decoder.v          # Main decoder module
     ├── mux_param.v             # Parametrized MUX module
     ├── pc.v                    # Program counter module
@@ -23,8 +24,6 @@ __Repository structure__
 
 This is example of primitive single-cycle RISC-V processor that architecture based on "Figure 7.12 Complete single-cycle processor" from book Digital Design and Computer Architecture RISC-V Edition:
 ![image](https://github.com/user-attachments/assets/618a5477-ddd7-4a22-80d5-e74d05265a0d)
-
-* Note: Two memory modules for instructions and data from Figure 7.12 replaced to DPRAM memory that contain data and instructions.
 
 Also repository have testbench for processor. This tb check result of execution of this program on address 0x40:
 ```
