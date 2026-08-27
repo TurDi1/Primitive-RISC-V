@@ -37,4 +37,4 @@ sw x3, 64(x0)
 addi x0, x0, 0
 ```
 
-* Note: at moment supported only addi, sw, lw, andi commands
+* Note: at moment supported only addi, sw, lw, andi instructions
