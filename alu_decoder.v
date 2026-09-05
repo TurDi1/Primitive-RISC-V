@@ -34,9 +34,9 @@ begin
       2'b01: alucontrol = 3'b001;                  // beq
       default: case(funct3)
                   3'b000: if (RtypeSub)
-                              alucontrol = 3'b001; // add
+                              alucontrol = 3'b001; // sub
                           else
-                              alucontrol = 3'b000; // sub
+                              alucontrol = 3'b000; // add
                   3'b010: alucontrol = 3'b101;     // slt         
                   3'b110: alucontrol = 3'b011;     // or
                   3'b111: alucontrol = 3'b010;     // and
