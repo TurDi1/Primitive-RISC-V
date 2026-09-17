@@ -1,7 +1,8 @@
 module imem
 #(
-   parameter DATA_WIDTH = 32,
-   parameter ADDR_WIDTH = 5
+   parameter        DATA_WIDTH = 32,
+   parameter        ADDR_WIDTH = 5,
+   parameter string MEM_FILE   = "tb_mach_codes.hex"
 )
 (
    addr,
@@ -16,7 +17,6 @@ output  [DATA_WIDTH - 1 : 0]   data;
 //==================================
 //      WIRE'S, REG'S and etc
 //==================================
-(* ram_init_file = "tb_mach_codes.hex" *)
 reg [DATA_WIDTH - 1 : 0] rom [(2 ** ADDR_WIDTH) - 1 : 0];
 
 //==================================
@@ -26,6 +26,6 @@ assign data = rom[addr];
 
 // Initialize ROM with hex file. Only for simulation
 initial begin
-   $readmemh("tb_mach_codes.hex", rom);
+   $readmemh(MEM_FILE, rom);
 end
 endmodule
