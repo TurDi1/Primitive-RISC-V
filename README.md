@@ -3,20 +3,20 @@
 __Repository structure__
 
     .
-    ├── adder.v                 # Adder module
-    ├── adder_n_subtractor.v    # Adderand subtractor module
-    ├── alu.v                   # ALU module
-    ├── alu_decoder.v           # ALU decoder module
-    ├── ctrl_unit.v             # Control unit module
-    ├── dmem.v                  # Data memory module
-    ├── extend.v                # Extend module
-    ├── imem.v                  # instruction memory module
-    ├── main_decoder.v          # Main decoder module
-    ├── mux_param.v             # Parametrized MUX module
-    ├── pc.v                    # Program counter module
-    ├── reg_file.v              # Register file module
-    ├── riscv.v                 # Single cycle proccessor top module
-    ├── riscv_tb.v              # Testbench for single cycle proccesor riscv
+    ├── adder.sv                # Adder module
+    ├── adder_n_subtractor.sv   # Adderand subtractor module
+    ├── alu.sv                  # ALU module
+    ├── alu_decoder.sv          # ALU decoder module
+    ├── ctrl_unit.sv            # Control unit module
+    ├── dmem.sv                 # Data memory module
+    ├── extend.sv               # Extend module
+    ├── imem.sv                 # instruction memory module
+    ├── main_decoder.sv         # Main decoder module
+    ├── mux_param.sv            # Parametrized MUX module
+    ├── pc.sv                   # Program counter module
+    ├── reg_file.sv             # Register file module
+    ├── riscv.sv                # Single cycle proccessor top module
+    ├── riscv_tb.sv             # Testbench for single cycle proccesor riscv
     ├── tb_mach_codes.hex       # HEX-file with program for testbench
     └── README.md
 
