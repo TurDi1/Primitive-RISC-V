@@ -37,4 +37,41 @@ sw x3, 64(x0)
 addi x0, x0, 0
 ```
 
-* Note: at moment supported only addi, sw, lw, andi instructions
+Also repo have testbench for BEQ instruction:
+```
+addi x1, x0, 0xff      # Set x1 = 255
+addi x2, x0, 0xf0      # Set x2 = 240
+addi x3, x0, 0xff      # Set x3 = 255
+
+addi x4, x0, 0x11      # FAIL signature
+addi x5, x0, 0x31      # PASS signature
+
+# Test 1: BEQ taken
+beq  x1, x3, equal_branch
+
+# This instruction must be skipped
+sw   x4, 8(x0)
+
+equal_branch:
+
+# Test 2: BEQ not taken
+beq  x1, x2, wrong_branch
+
+# If branch is not taken, store PASS signature
+sw   x5, 8(x0)
+
+# Unconditional branch using BEQ x0, x0
+beq  x0, x0, test_end
+
+wrong_branch:
+
+# If the second BEQ is taken, store FAIL signature
+sw   x4, 8(x0)
+
+test_end:
+
+# NOP-like instruction, marks the end of the test program
+addi x0, x0, 0
+```
+
+* Note: at moment supported: addi, sw, lw, andi, beq instructions
